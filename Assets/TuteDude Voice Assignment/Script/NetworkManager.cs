@@ -1,12 +1,14 @@
 using Fusion;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class NetworkManager : SimulationBehaviour, IPlayerJoined
 {
     public static NetworkManager Instance;
 
-    [SerializeField] private GameObject _startButton;
+    [SerializeField] private GameObject _startButton,_stopButton,_loading;
+
     public GameObject PlayerPrefabs;
     public Transform[] SpawnPoints;
     public NetworkRunner _runner;
@@ -32,6 +34,8 @@ public class NetworkManager : SimulationBehaviour, IPlayerJoined
     {
         _runner = AddBehaviour<NetworkRunner>();
         _runner.ProvideInput = true;
+        _startButton.SetActive(false);
+        _loading.SetActive(true);
 
         await _runner.StartGame(new StartGameArgs()
         {
@@ -39,7 +43,8 @@ public class NetworkManager : SimulationBehaviour, IPlayerJoined
             SessionName = "1234",
         });
 
-        _startButton.SetActive(false);
+        _loading.SetActive(false);
+        _stopButton.SetActive(true);
     }
 
     public void PlayerJoined(PlayerRef player)
@@ -50,5 +55,12 @@ public class NetworkManager : SimulationBehaviour, IPlayerJoined
 
             _runner.Spawn(PlayerPrefabs, SpawnPoints[_randomSpawnPoints].position, Quaternion.identity);
         }
+    }
+
+
+
+    public void Disconnect()
+    {
+        Application.Quit();
     }
 }
