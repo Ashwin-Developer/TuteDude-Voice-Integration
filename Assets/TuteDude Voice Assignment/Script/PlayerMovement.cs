@@ -9,7 +9,7 @@ public class PlayerMovement : NetworkBehaviour
 
     private Vector2 _moveInput;
     private Vector2 _moveVelocity;
-    //[SerializeField] private Rigidbody2D _rb;
+
     [SerializeField] private NetworkRigidbody2D _rb;
 
     public override void Spawned()
@@ -19,12 +19,6 @@ public class PlayerMovement : NetworkBehaviour
             return;
         }
     }
-
-    private void Awake()
-    {
-        
-    }
-
 
     public override void FixedUpdateNetwork()
     {
@@ -39,7 +33,7 @@ public class PlayerMovement : NetworkBehaviour
         _moveInput = new Vector2(moveX, moveY).normalized;
         _moveVelocity = _moveInput * _moveSpeed;
 
-        _rb.Rigidbody.MovePosition(_rb.Rigidbody.position + _moveVelocity * Time.fixedDeltaTime);
+        _rb.Rigidbody.velocity = _moveVelocity;
     }
 
 

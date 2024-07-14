@@ -4,12 +4,25 @@ using UnityEngine;
 
 public class NetworkManager : SimulationBehaviour, IPlayerJoined
 {
+    public static NetworkManager Instance;
+
     [SerializeField] private GameObject _startButton;
     public GameObject PlayerPrefabs;
     public Transform[] SpawnPoints;
-    private NetworkRunner _runner;
+    public NetworkRunner _runner;
 
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
 
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
     public void CreateAndJoinLobby()
     {
         StartGame(GameMode.Shared);
