@@ -10,6 +10,8 @@ namespace Agora_RTC_Plugin.API_Example.Examples.Basic.JoinChannelAudio
 {
     public class JoinChannelAudio : MonoBehaviour
     {
+        public static JoinChannelAudio instance;
+
         [FormerlySerializedAs("appIdInput")]
         [SerializeField]
         private AppIdInput _appIdInput;
@@ -36,6 +38,19 @@ namespace Agora_RTC_Plugin.API_Example.Examples.Basic.JoinChannelAudio
         public Dropdown _audioDeviceSelect;
 
         // Start is called before the first frame update
+
+        private void Awake()
+        {
+            if (instance == null)
+            {
+                instance = this;
+            }
+
+            else
+            {
+                Destroy(this.gameObject);
+            }
+        }
         private void Start()
         {
             LoadAssetData();

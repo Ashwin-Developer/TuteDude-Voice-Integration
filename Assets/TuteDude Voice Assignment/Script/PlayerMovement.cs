@@ -1,3 +1,4 @@
+using Agora_RTC_Plugin.API_Example.Examples.Basic.JoinChannelAudio;
 using Fusion;
 using UnityEngine;
 using NetworkRigidbody2D = Fusion.Addons.Physics.NetworkRigidbody2D;
@@ -36,5 +37,19 @@ public class PlayerMovement : NetworkBehaviour
         _rb.Rigidbody.velocity = _moveVelocity;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            JoinChannelAudio.instance.JoinChannel();
+        }
+    }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            JoinChannelAudio.instance.LeaveChannel();
+        }
+    }
 }
