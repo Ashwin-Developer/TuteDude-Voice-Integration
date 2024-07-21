@@ -426,7 +426,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 3
   _rb: {fileID: -7843676501552213796}
-  _spriteRenderer: {fileID: 0}
+  _audioSprite: {fileID: 0}
 --- !u!114 &8445306815563608318
 MonoBehaviour:
   m_ObjectHideFlags: 0

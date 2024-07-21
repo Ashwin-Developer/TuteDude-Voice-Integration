@@ -1,4 +1,6 @@
+using Agora_RTC_Plugin.API_Example.Examples.Basic.JoinChannelAudio;
 using Fusion;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,9 +11,10 @@ public class NetworkManager : SimulationBehaviour, IPlayerJoined
 
     [SerializeField] private GameObject _startButton,_stopButton,_loading;
 
-    public GameObject PlayerPrefabs;
+    public PlayerScriptableObject _playerPrefab;
     public Transform[] SpawnPoints;
     public NetworkRunner _runner;
+
 
     private void Awake()
     {
@@ -52,12 +55,24 @@ public class NetworkManager : SimulationBehaviour, IPlayerJoined
         if (player == Runner.LocalPlayer)
         {
             int _randomSpawnPoints = Random.Range(0, SpawnPoints.Length);
+            int _randomPlayer = Random.Range(0, _playerPrefab.player.Count);
 
-            _runner.Spawn(PlayerPrefabs, SpawnPoints[_randomSpawnPoints].position, Quaternion.identity);
+            _runner.Spawn(_playerPrefab.player[_randomPlayer], SpawnPoints[_randomSpawnPoints].position, Quaternion.identity);
         }
     }
+/*
+    public void CheckingPlayerToConnect()
+    {
+        if(PlayersInRadio.Count >= 2)
+        {
+            JoinChannelAudio.instance.JoinChannel();
+        }
 
-
+        else
+        {
+            JoinChannelAudio.instance.LeaveChannel();
+        }
+    }*/
 
     public void Disconnect()
     {

@@ -12,13 +12,7 @@ public class PlayerMovement : NetworkBehaviour
     private Vector2 _moveVelocity;
 
     [SerializeField] private NetworkRigidbody2D _rb;
-    [SerializeField] private SpriteRenderer _spriteRenderer;
-
-    private void Start()
-    {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _spriteRenderer.color = Color.red;
-    }
+    [SerializeField] private GameObject _audioSprite;
     public override void Spawned()
     {
         if (!HasStateAuthority)
@@ -48,7 +42,7 @@ public class PlayerMovement : NetworkBehaviour
         if (collision.CompareTag("Player"))
         {
             JoinChannelAudio.instance.JoinChannel();
-            _spriteRenderer.color = Color.green;
+            _audioSprite.SetActive(true);
 
         }
     }
@@ -58,7 +52,8 @@ public class PlayerMovement : NetworkBehaviour
         if (collision.CompareTag("Player"))
         {
             JoinChannelAudio.instance.LeaveChannel();
-            _spriteRenderer.color = Color.red;
+            _audioSprite.SetActive(false);
+
         }
     }
 }
